@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EDA Report</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="container">
+          <div class="brand">
+            <div class="brand-mark">EDA</div>
+            <div>
+              <div class="brand-title">EDA Report Generator</div>
+              <div class="brand-subtitle">Upload a CSV and get a plain‑English summary</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="alerts">
+              {% for category, msg in messages %}
+                <div class="alert {{ 'alert-error' if category == 'error' else 'alert-info' }}">{{ msg }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <div class="grid">
+          <section class="card">
+            <h2 class="h2">Analyze a CSV</h2>
+            <p class="muted">Choose a file from your computer. The report is generated locally.</p>
+
+            <form class="form" method="post" action="{{ url_for('report') }}" enctype="multipart/form-data">
+              <label class="label" for="file">CSV file</label>
+              <input class="input" id="file" name="file" type="file" accept=".csv" />
+
+              <div class="row">
+                <button class="button" type="submit">Generate report</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <section class="card" style="margin-top: 16px;">
+          <h2 class="h2">What you’ll get</h2>
+          <div class="pill-row">
+            <span class="pill">Key Insights</span>
+            <span class="pill">Trends & Patterns</span>
+            <span class="pill">Data Quality</span>
+            <span class="pill">Plain-English Summary</span>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="container">Runs locally. No data is uploaded to the internet.</div>
+      </footer>
+    </div>
+  </body>
+</html>

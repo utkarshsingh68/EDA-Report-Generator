@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EDA Report — {{ dataset_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="container header-row">
+          <div class="brand">
+            <div class="brand-mark">EDA</div>
+            <div>
+              <div class="brand-title">EDA Report</div>
+              <div class="brand-subtitle">{{ dataset_name }}</div>
+            </div>
+          </div>
+          <div class="header-actions">
+            <a class="button button-secondary" href="{{ url_for('index') }}">Analyze another file</a>
+          </div>
+        </div>
+      </header>
+
+      <main class="container" style="padding-top: 18px;">
+        {% if charts %}
+          <section class="card" style="margin-bottom: 16px;">
+            <h2 class="h2">Charts</h2>
+            <div class="chart-grid">
+              {% for c in charts %}
+                <figure class="chart">
+                  <img class="chart-img" src="{{ c.url }}" alt="{{ c.title }}" />
+                  <figcaption class="muted">{{ c.title }}</figcaption>
+                </figure>
+              {% endfor %}
+            </div>
+          </section>
+        {% endif %}
+
+        <section class="card report">
+          <div class="report-toolbar">
+            <div class="muted">Saved markdown: <span class="kbd">reports/{{ report_file }}</span></div>
+            {% if download_url %}
+              <a class="button button-secondary" href="{{ download_url }}">Download (.zip)</a>
+            {% endif %}
+          </div>
+          <div class="report-body">{{ report_html | safe }}</div>
+        </section>
+
+        <details class="card" style="margin-top: 16px;">
+          <summary class="summary">Raw markdown (for copying)</summary>
+          <pre class="code">{{ report_md }}</pre>
+        </details>
+      </main>
+
+      <footer class="footer">
+        <div class="container">Generated locally from your CSV.</div>
+      </footer>
+    </div>
+  </body>
+</html>
