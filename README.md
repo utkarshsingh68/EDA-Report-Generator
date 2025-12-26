@@ -2,6 +2,34 @@
 
 Generates a plain-English EDA report from a CSV file.
 
+## Run Locally (Windows PowerShell)
+
+```powershell
+git clone https://github.com/utkarshsingh68/EDA-Report-Generator.git
+Set-Location .\EDA-Report-Generator
+
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+pip install -e .
+```
+
+### Start the website
+
+```powershell
+eda-web
+```
+
+Open `http://127.0.0.1:8000` and upload a `.csv`.
+
+### Generate a report from the CLI
+
+```powershell
+eda-report --input "path\to\data.csv" --output "reports\data-report.md"
+```
+
+The CLI also generates charts in `reports/charts/` and embeds them into the Markdown report.
+
 ## Quickstart (Windows PowerShell)
 
 1. Put your dataset in `data/` (optional).
